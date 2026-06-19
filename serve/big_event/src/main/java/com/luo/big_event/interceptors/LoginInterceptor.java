@@ -1,6 +1,5 @@
 package com.luo.big_event.interceptors;
 
-import com.luo.big_event.pojo.Result;
 import com.luo.big_event.utils.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
