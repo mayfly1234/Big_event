@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,6 +79,33 @@ public class UserController {
     public Result updateAvatar(@RequestParam @URL String avatarUrl){
         userService.updateAvatar(avatarUrl);
         return Result.success();
+    }
+
+    @PatchMapping("/updatePwd")
+    public Result updatePwd(@RequestBody Map<String, String> params){
+        String oldPwd = params.get("old_pwd");
+        String newPwd = params.get("new_pwd");
+        String rePwd = params.get("re_pwd");
+
+        if(!StringUtils.hasLength(oldPwd)||!StringUtils.hasLength(newPwd)||!StringUtils.hasLength(rePwd)){
+            return Result.error("参数错误");
+        }
+
+        Map<String,Object>map= ThreadLocalUtil.get();
+        String username = (String)map.get("username");
+        User loginUser = userService.findByUserName(username);
+
+        if(!loginUser.getPassword().equals(DigestUtils.md5DigestAsHex(oldPwd.getBytes()))){
+            return Result.error("源密码错误");
+        }
+
+        if(!newPwd.equals(rePwd)){
+            return Result.error("两次密码不一致");
+        }
+
+        userService.updatePwd(newPwd);
+        return Result.success();
+
     }
 
 }
