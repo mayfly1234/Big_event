@@ -1,20 +1,15 @@
 package com.luo.big_event.controller;
 
 import com.luo.big_event.pojo.Result;
-import com.luo.big_event.utils.JwtUtil;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
+@RestController
+@RequestMapping("/article")
 public class ArticleController {
-    public Result<String>list(@RequestHeader(name = "Authorization")String token, HttpServletResponse respon){
-        try{
-            Map<String,Object> chaims= JwtUtil.parseToken(token);
-            return Result.success("欢迎"+chaims.get("username")+"所有的文章数据...");
-        }catch (Exception e){
-            respon.setStatus(401);
-            return Result.error("未登录");
-        }
+    @GetMapping("/list")
+    public Result<String>list(){
+        return Result.success("欢迎,"+"所有的文章数据...");
     }
 }
