@@ -30,4 +30,5 @@ public class LoginInterceptor implements HandlerInterceptor {
         ThreadLocalUtil.remove();//清空线程变量
     }
 
+
 }
