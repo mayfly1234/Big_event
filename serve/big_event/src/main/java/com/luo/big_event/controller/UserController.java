@@ -4,6 +4,7 @@ import com.luo.big_event.pojo.Result;
 import com.luo.big_event.pojo.User;
 import com.luo.big_event.service.UserService;
 import com.luo.big_event.utils.JwtUtil;
+import com.luo.big_event.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
@@ -58,9 +59,10 @@ public class UserController {
 
     @GetMapping("/userInfo")
     public Result<User> userInfo(@RequestHeader(name="Authorization") String token) {
-    Map<String,Object>map= JwtUtil.parseToken(token);
+    /*Map<String,Object>map= JwtUtil.parseToken(token);
+    String username = (String)map.get("username");*/
+    Map<String,Object> map = ThreadLocalUtil.get();
     String username = (String)map.get("username");
-
     User u = userService.findByUserName(username);
     return Result.success(u);
     }
