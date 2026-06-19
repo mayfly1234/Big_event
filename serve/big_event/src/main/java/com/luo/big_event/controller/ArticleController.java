@@ -1,15 +1,27 @@
 package com.luo.big_event.controller;
 
+
+import com.luo.big_event.pojo.Article;
 import com.luo.big_event.pojo.Result;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.luo.big_event.service.ArticleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/article")
 public class ArticleController {
-    @GetMapping("/list")
-    public Result<String>list(){
-        return Result.success("欢迎,"+"所有的文章数据...");
+
+    @Autowired
+    private ArticleService articleService;
+
+    @PostMapping
+    public Result add(@RequestBody @Validated Article  article){
+        articleService.add(article);
+        return Result.success();
     }
+
 }
