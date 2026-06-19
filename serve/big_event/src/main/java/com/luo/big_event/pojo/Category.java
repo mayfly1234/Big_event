@@ -3,10 +3,12 @@ package com.luo.big_event.pojo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 @Data
 public class Category {
+    @NonNull
     private Integer id;//主键ID
     @NotEmpty
     private String categoryName;//分类名称

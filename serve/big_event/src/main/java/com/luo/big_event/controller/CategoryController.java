@@ -26,4 +26,14 @@ public class CategoryController {
         List<Category> cs = categoryService.list();
         return Result.success(cs);
     }
+    @GetMapping("/detail")
+    public Result<Category> detail(Integer  id){
+        Category c=categoryService.findById(id);
+        return Result.success(c);
+    }
+    @PutMapping
+    public Result update(@RequestBody @Validated Category category){
+        categoryService.update(category);
+        return Result.success();
+    }
 }
