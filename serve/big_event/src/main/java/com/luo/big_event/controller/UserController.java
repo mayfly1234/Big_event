@@ -6,6 +6,7 @@ import com.luo.big_event.service.UserService;
 import com.luo.big_event.utils.JwtUtil;
 import com.luo.big_event.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
@@ -70,6 +71,12 @@ public class UserController {
     @PutMapping("/update")
     public Result update(@RequestBody @Validated User  user){
         userService.update(user);
+        return Result.success();
+    }
+
+    @PatchMapping("/updateAvatar")
+    public Result updateAvatar(@RequestParam @URL String avatarUrl){
+        userService.updateAvatar(avatarUrl);
         return Result.success();
     }
 
